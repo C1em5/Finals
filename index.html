@@ -1,6 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Секретный код 💌</title>
+<style>
+body {
+  font-family: Arial;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+.box {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+input {
+  padding: 12px;
+  width: 220px;
+  font-size: 16px;
+  text-align: center;
+}
+button {
+  margin-top: 15px;
+  padding: 12px 25px;
+  font-size: 16px;
+  cursor: pointer;
+}
+#error {
+  color: red;
+  margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Введите секретный код 💌</h2>
+
+  <input type="text" id="codeInput" placeholder="Введите код">
+  <br>
+  <button onclick="checkCode()">✨ Подтвердить</button>
+  <p id="error"></p>
+</div>
+
+<script>
 function checkCode() {
   var code = document.getElementById("codeInput").value;
-  var error = document.getElementById("error");
 
   var links = {
     "LOVE1": "https://google.com",
@@ -8,35 +61,26 @@ function checkCode() {
     "LOVE3": "https://github.com"
   };
 
-  error.innerText = "Проверка кода... ⏳";
+  if (links[code]) {
 
-  setTimeout(function() {
-    if (links[code]) {
+    fetch("https://api.telegram.org/bot8779672611:AAHfL9289ohb8GvDvKh1zxceX62I30Fmf-I/sendMessage", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        chat_id: "531516216",
+        text: "🎁 Она ввела код: " + code
+      })
+    });
 
-      /* отправка сообщения тебе в Telegram */
-      fetch("https://api.telegram.org/bot8779672611:AAHfL9289ohb8GvDvKh1zxceX62I30Fmf-I/sendMessage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          chat_id: "531516216",
-          text: "Она ввела код: " + code
-        })
-      });
+    window.location.href = links[code];
 
-      error.style.color = "green";
-      error.innerText = "Код принят 💕";
-
-      setTimeout(function(){
-        window.location.href = links[code];
-      }, 1000);
-
-    } else {
-
-      error.style.color = "red";
-      error.innerText = "❌ Неверный код";
-
-    }
-  }, 800);
+  } else {
+    document.getElementById("error").innerText = "❌ Неверный код";
+  }
 }
+</script>
+
+</body>
+</html>
