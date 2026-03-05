@@ -1,0 +1,42 @@
+function checkCode() {
+  var code = document.getElementById("codeInput").value;
+  var error = document.getElementById("error");
+
+  var links = {
+    "LOVE1": "https://google.com",
+    "LOVE2": "https://youtube.com",
+    "LOVE3": "https://github.com"
+  };
+
+  error.innerText = "Проверка кода... ⏳";
+
+  setTimeout(function() {
+    if (links[code]) {
+
+      /* отправка сообщения тебе в Telegram */
+      fetch("https://api.telegram.org/bot8779672611:AAHfL9289ohb8GvDvKh1zxceX62I30Fmf-I/sendMessage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: "531516216",
+          text: "Она ввела код: " + code
+        })
+      });
+
+      error.style.color = "green";
+      error.innerText = "Код принят 💕";
+
+      setTimeout(function(){
+        window.location.href = links[code];
+      }, 1000);
+
+    } else {
+
+      error.style.color = "red";
+      error.innerText = "❌ Неверный код";
+
+    }
+  }, 800);
+}
