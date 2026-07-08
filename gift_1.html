@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <title>RTMcop</title>
@@ -9,7 +9,7 @@
 
 body {
     font-family: Arial;
-    background: linear-gradient(135deg, #ffdeab, #ffe3b9);    
+    background: linear-gradient(135deg, #ffdeab, #ffe3b9);
     height:100vh;
     display:flex;
     justify-content:center;
@@ -18,42 +18,11 @@ body {
 }
 
 .box {
-    <div id="intro">
-
-    <h2>🎁 Первый подарок</h2>
-
-    <p>
-    Перед тем как открыть свой первый подарок,
-    тебе предстоит пройти небольшой тест.
-    <br><br>
-
-    Не переживай ❤️
-    Все вопросы очень простые.
-    </p>
-
-    <button onclick="startTest()">
-    Начать тест
-    </button>
-
-    </div>
-    <div id="quiz" style="display:none;">
-
-    <h2>Вопрос 1 из 3</h2>
-
-    <p id="question">
-    ...
-    </p>
-    
-    <button onclick="answer()">
-    Ответ
-    </button>
-
-    </div>
     background:white;
     padding:30px;
     border-radius:25px;
     text-align:center;
-    width:320px;
+    width:350px;
     box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
 
@@ -66,51 +35,70 @@ button {
     border:none;
     cursor:pointer;
     font-size:16px;
+    transition:0.3s;
 }
 
 button:hover {
     transform:scale(1.05);
 }
 
-#gift {
+#gift{
     display:none;
-    font-size:40px;
+    font-size:35px;
 }
 
 </style>
 
 </head>
 
-
 <body>
-
 
 <div class="box">
 
-<h2>🎁 Первый подарок</h2>
+    <!-- Стартовая страница -->
 
-<p id="question">
-Что тебе больше нравится создавать?
-</p>
+    <div id="intro">
 
+        <h2>🎁 Первый подарок</h2>
 
-<button onclick="answer()">🎬 Видео</button>
-<button onclick="answer()">📸 Фото</button>
-<button onclick="answer()">🎵 Музыка</button>
-<button onclick="answer()">✨ Всё сразу</button>
+        <p>
+            Перед тем как открыть свой первый подарок,
+            тебе предстоит пройти небольшой тест.
+            <br><br>
+            Не переживай ❤️
+            Все вопросы очень простые.
+        </p>
 
+        <button onclick="startTest()">
+            Начать тест
+        </button>
 
-<p id="result"></p>
+    </div>
 
-<div id="gift">
-🎙️
-<br>
-Твой подарок готов ❤️
+    <!-- Тест -->
+
+    <div id="quiz" style="display:none;">
+
+        <h2 id="title">Вопрос 1 из 3</h2>
+
+        <p id="question">
+            Что тебе больше нравится создавать?
+        </p>
+
+        <button onclick="answer()">🎬 Видео</button>
+        <button onclick="answer()">📸 Фото</button>
+        <button onclick="answer()">🎵 Музыка</button>
+        <button onclick="answer()">✨ Всё сразу</button>
+
+        <div id="gift">
+            🎙️
+            <br><br>
+            Твой подарок готов ❤️
+        </div>
+
+    </div>
+
 </div>
-
-
-</div>
-
 
 <script>
 
@@ -122,41 +110,45 @@ function startTest(){
     document.getElementById("quiz").style.display = "block";
 
 }
+
 function answer(){
 
-step++;
+    step++;
 
+    if(step == 1){
 
-if(step == 1){
+        document.getElementById("title").innerHTML = "Вопрос 2 из 3";
 
-document.getElementById("question").innerHTML =
-"Что самое важное в хорошем видео?";
+        document.getElementById("question").innerHTML =
+        "Что самое важное в хорошем видео?";
 
-}
+    }
 
-else if(step == 2){
+    else if(step == 2){
 
-document.getElementById("question").innerHTML =
-"Готова открыть подарок?";
+        document.getElementById("title").innerHTML = "Вопрос 3 из 3";
 
-}
+        document.getElementById("question").innerHTML =
+        "Готова открыть подарок?";
 
-else {
+    }
 
-document.getElementById("question").style.display="none";
+    else{
 
-document.querySelectorAll("button")
-.forEach(btn=>btn.style.display="none");
+        document.getElementById("title").style.display = "none";
+        document.getElementById("question").style.display = "none";
 
+        document.querySelectorAll("#quiz button").forEach(button=>{
+            button.style.display="none";
+        });
 
-document.getElementById("gift").style.display="block";
+        document.getElementById("gift").style.display="block";
 
-}
+    }
 
 }
 
 </script>
-
 
 </body>
 </html>
