@@ -2,171 +2,230 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>RTMcop</title>
-<link rel="icon" type="image/png" href="d0cc9608-f3a8-438e-83e6-d7ee3111d599-removebg-preview.png">
+<title>Первый подарок</title>
 
 <style>
 
-body {
-    font-family: Arial;
-    background: linear-gradient(135deg, #ffdeab, #ffe3b9);
-    height:100vh;
+body{
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#ffdeab,#ffe3b9);
     display:flex;
     justify-content:center;
     align-items:center;
+    height:100vh;
     margin:0;
 }
 
-.box {
+.box{
+    width:380px;
     background:white;
     padding:30px;
-    border-radius:25px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
     text-align:center;
-    width:350px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
 
-button {
-    display:block;
+button{
     width:100%;
-    margin:10px 0;
     padding:12px;
-    border-radius:15px;
+    margin:8px 0;
     border:none;
+    border-radius:12px;
     cursor:pointer;
     font-size:16px;
-    transition:0.3s;
+    transition:.2s;
 }
 
-button:hover {
-    transform:scale(1.05);
+button:hover{
+    transform:scale(1.03);
+}
+
+#quiz{
+    display:none;
 }
 
 #gift{
     display:none;
-    font-size:35px;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <div class="box">
 
-    <!-- Стартовая страница -->
+<div id="intro">
 
-    <div id="intro">
+<h2>🎁 Первый подарок</h2>
 
-        <h2>🎁 Первый подарок</h2>
+<p>
+Перед тем как получить свой первый подарок,
+тебе предстоит пройти небольшой тест.
+<br><br>
+Не переживай ❤️
+Все вопросы очень простые.
+</p>
 
-        <p>
-            Перед тем как открыть свой первый подарок,
-            тебе предстоит пройти небольшой тест.
-            <br><br>
-            Не переживай ❤️
-            Все вопросы очень простые.
-        </p>
+<button onclick="startTest()">
+Начать тест
+</button>
 
-        <button onclick="startTest()">
-            Начать тест
-        </button>
+</div>
 
-    </div>
+<div id="quiz">
 
-    <!-- Тест -->
+<h2 id="title"></h2>
 
-    <div id="quiz" style="display:none;">
+<p id="question"></p>
 
-        <h2 id="title">Вопрос 1 из 3</h2>
+<div id="answers"></div>
 
-        <p id="question">
-            Что тебе больше нравится создавать?
-        </p>
+</div>
 
-        <button onclick="answer(0)">🎬 Видео</button>
-        <button onclick="answer(0)">📸 Фото</button>
-        <button onclick="answer(0)">🎵 Музыка</button>
-        <button onclick="answer(1)">✨ Всё сразу</button>
-
-        <div id="gift">
-            🎙️
-            <br><br>
-            Твой подарок готов ❤️
-        </div>
-
-    </div>
+<div id="gift"></div>
 
 </div>
 
 <script>
-let step = 0;
-let score = 0;
 
+const questions=[
+
+{
+question:"Что тебе больше нравится создавать?",
+answers:[
+"🎬 Видео",
+"📸 Фото",
+"🎵 Музыка",
+"✨ Всё сразу"
+],
+correct:3
+},
+
+{
+question:"Что самое важное в хорошем видео?",
+answers:[
+"🎤 Хороший звук",
+"💡 Свет",
+"🎬 Монтаж",
+"❤️ Всё вместе"
+],
+correct:3
+},
+
+{
+question:"Готова открыть подарок?",
+answers:[
+"Конечно ❤️",
+"Да!",
+"Очень!",
+"Все варианты 😄"
+],
+correct:3
+}
+
+];
+
+let currentQuestion=0;
+let score=0;
 
 function startTest(){
 
-    document.getElementById("intro").style.display = "none";
-    document.getElementById("quiz").style.display = "block";
+document.getElementById("intro").style.display="none";
+document.getElementById("quiz").style.display="block";
+
+showQuestion();
 
 }
-function answer(correct){
 
-    if(correct){
-        score++;
-    }
+function showQuestion(){
 
-    step++;
+document.getElementById("title").innerHTML=
+"Вопрос "+(currentQuestion+1)+" из "+questions.length;
 
-    ...
+document.getElementById("question").innerHTML=
+questions[currentQuestion].question;
+
+const answers=document.getElementById("answers");
+
+answers.innerHTML="";
+
+questions[currentQuestion].answers.forEach((answer,index)=>{
+
+answers.innerHTML+=`
+<button onclick="checkAnswer(${index})">
+${answer}
+</button>
+`;
+
+});
+
 }
-function answer(){
 
-    step++;
+function checkAnswer(index){
 
-    if(step == 1){
+if(index===questions[currentQuestion].correct){
 
-        document.getElementById("title").innerHTML = "Вопрос 2 из 3";
+score++;
 
-        document.getElementById("question").innerHTML =
-        "Что самое важное в хорошем видео?";
+}
 
-    }
+currentQuestion++;
 
-    else if(step == 2){
+if(currentQuestion<questions.length){
 
-        document.getElementById("title").innerHTML = "Вопрос 3 из 3";
+showQuestion();
 
-        document.getElementById("question").innerHTML =
-        "Готова открыть подарок?";
+}else{
 
-    }
+finishTest();
 
-    else{
+}
 
-        document.getElementById("title").style.display = "none";
-        document.getElementById("question").style.display = "none";
+}
 
-        document.querySelectorAll("#quiz button").forEach(button=>{
-            button.style.display="none";
-        });
+function finishTest(){
 
-        document.getElementById("gift").innerHTML = `
-        🎙️
-        <br><br>
-        
-        Правильных ответов:
-        <b>${score} / 3</b>
-        
-        <br><br>
-        
-        Подарок всё равно твой ❤️
-        `;
-        
-        document.getElementById("gift").style.display="block";
+document.getElementById("quiz").style.display="none";
 
-        }
+document.getElementById("gift").style.display="block";
+
+let message="";
+
+if(score==3){
+
+message="🏆 Идеально!";
+
+}else if(score==2){
+
+message="😄 Отличный результат!";
+
+}else{
+
+message="❤️ Самое главное — ты дошла до конца!";
+}
+
+document.getElementById("gift").innerHTML=`
+
+<h2>🎙️ Первый подарок</h2>
+
+<p>
+
+${message}
+
+<br><br>
+
+Правильных ответов:
+
+<b>${score} из ${questions.length}</b>
+
+<br><br>
+
+Ты заслужила свой первый подарок ❤️
+
+</p>
+
+`;
 
 }
 
