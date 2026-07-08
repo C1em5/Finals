@@ -93,7 +93,32 @@ function checkCode() {
 
     const status = document.getElementById("status");
     const button = document.querySelector("button");
+    setTimeout(() => {
 
+    status.innerHTML = "✅ Код принят!";
+
+    },1000);
+    setTimeout(() => {
+
+    confetti({
+        particleCount:180,
+        spread:120,
+        origin:{y:0.6}
+    });
+
+    status.innerHTML = "🎁 Подарок найден!";
+
+    },2000);
+    setTimeout(() => {
+
+    document.querySelector(".box").classList.add("hide");
+
+    },3200);
+    setTimeout(() => {
+
+    window.location.href = links[code];
+
+    },4200);
 button.disabled = true;
 
 status.innerHTML = "🔍 Проверяем код...";
