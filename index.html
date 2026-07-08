@@ -104,9 +104,11 @@ function checkCode() {
     setTimeout(() => {
 
     confetti({
-        particleCount:360,
-        spread:240,
-        origin:{y:0.6}
+      particleCount: 120,
+      spread: 100,
+      origin: { y: 0.6 },
+      shapes: ["heart"],
+      scalar: 1.5
     });
 
     status.innerHTML = "🎁 Подарок найден!";
