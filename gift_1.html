@@ -85,10 +85,10 @@ button:hover {
             Что тебе больше нравится создавать?
         </p>
 
-        <button onclick="answer()">🎬 Видео</button>
-        <button onclick="answer()">📸 Фото</button>
-        <button onclick="answer()">🎵 Музыка</button>
-        <button onclick="answer()">✨ Всё сразу</button>
+        <button onclick="answer(0)">🎬 Видео</button>
+        <button onclick="answer(0)">📸 Фото</button>
+        <button onclick="answer(0)">🎵 Музыка</button>
+        <button onclick="answer(1)">✨ Всё сразу</button>
 
         <div id="gift">
             🎙️
@@ -101,8 +101,9 @@ button:hover {
 </div>
 
 <script>
-
 let step = 0;
+let score = 0;
+
 
 function startTest(){
 
@@ -110,7 +111,16 @@ function startTest(){
     document.getElementById("quiz").style.display = "block";
 
 }
+function answer(correct){
 
+    if(correct){
+        score++;
+    }
+
+    step++;
+
+    ...
+}
 function answer(){
 
     step++;
@@ -142,9 +152,21 @@ function answer(){
             button.style.display="none";
         });
 
+        document.getElementById("gift").innerHTML = `
+        🎙️
+        <br><br>
+        
+        Правильных ответов:
+        <b>${score} / 3</b>
+        
+        <br><br>
+        
+        Подарок всё равно твой ❤️
+        `;
+        
         document.getElementById("gift").style.display="block";
 
-    }
+        }
 
 }
 
