@@ -100,28 +100,28 @@ function checkCode() {
 
     status.innerHTML = "✅ Код принят!";
 
-    },1000);
+    },2000);
     setTimeout(() => {
 
     confetti({
-        particleCount:180,
+        particleCount:1000,
         spread:120,
         origin:{y:0.6}
     });
 
     status.innerHTML = "🎁 Подарок найден!";
 
-    },2000);
+    },3000);
     setTimeout(() => {
 
     document.querySelector(".box").classList.add("hide");
 
-    },3200);
+    },4200);
     setTimeout(() => {
 
     window.location.href = links[code];
 
-    },4200);
+    },5200);
 
 
   } else {
