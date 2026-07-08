@@ -91,7 +91,12 @@ function checkCode() {
       })
     });
 
-    window.location.href = links[code];
+    const status = document.getElementById("status");
+    const button = document.querySelector("button");
+
+button.disabled = true;
+
+status.innerHTML = "🔍 Проверяем код...";
 
   } else {
     document.getElementById("error").innerText = "❌ Неверный код";
