@@ -93,6 +93,9 @@ function checkCode() {
 
     const status = document.getElementById("status");
     const button = document.querySelector("button");
+    button.disabled = true;
+
+    status.innerHTML = "🔍 Проверяем код...";
     setTimeout(() => {
 
     status.innerHTML = "✅ Код принят!";
@@ -119,9 +122,7 @@ function checkCode() {
     window.location.href = links[code];
 
     },4200);
-button.disabled = true;
 
-status.innerHTML = "🔍 Проверяем код...";
 
   } else {
     document.getElementById("error").innerText = "❌ Неверный код";
