@@ -1,1 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Первый подарок ❤️</title>
 
+<style>
+
+body {
+    font-family: Arial;
+    background: linear-gradient(135deg,#ffd6e0,#fff0f5);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:0;
+}
+
+.box {
+    background:white;
+    padding:30px;
+    border-radius:25px;
+    text-align:center;
+    width:320px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+button {
+    display:block;
+    width:100%;
+    margin:10px 0;
+    padding:12px;
+    border-radius:15px;
+    border:none;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover {
+    transform:scale(1.05);
+}
+
+#gift {
+    display:none;
+    font-size:40px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="box">
+
+<h2>🎁 Первый подарок</h2>
+
+<p id="question">
+Что тебе больше нравится создавать?
+</p>
+
+
+<button onclick="answer()">🎬 Видео</button>
+<button onclick="answer()">📸 Фото</button>
+<button onclick="answer()">🎵 Музыка</button>
+<button onclick="answer()">✨ Всё сразу</button>
+
+
+<p id="result"></p>
+
+<div id="gift">
+🎙️
+<br>
+Твой подарок готов ❤️
+</div>
+
+
+</div>
+
+
+<script>
+
+let step = 0;
+
+
+function answer(){
+
+step++;
+
+
+if(step == 1){
+
+document.getElementById("question").innerHTML =
+"Что самое важное в хорошем видео?";
+
+}
+
+else if(step == 2){
+
+document.getElementById("question").innerHTML =
+"Готова открыть подарок?";
+
+}
+
+else {
+
+document.getElementById("question").style.display="none";
+
+document.querySelectorAll("button")
+.forEach(btn=>btn.style.display="none");
+
+
+document.getElementById("gift").style.display="block";
+
+}
+
+}
+
+</script>
+
+
+</body>
+</html>
