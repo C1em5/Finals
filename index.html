@@ -149,6 +149,32 @@ button.text-link{
   display:inline-block; margin:6px 0 18px; padding:6px 16px; border-radius:999px;
   border:1px solid var(--gold); color:var(--gold-soft); font-size:13px; letter-spacing:.04em;
 }
+.gift-link{
+  display:block;
+  margin:18px 0 6px;
+  padding:14px;
+  border-radius:12px;
+  background:linear-gradient(135deg, var(--gold), #b98a4a);
+  color:#ffffff;
+  font-weight:600;
+  font-size:15px;
+  text-decoration:none;
+  text-align:center;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+@media (hover:hover) and (pointer:fine){
+  .gift-link:hover{
+    transform:translateY(-1px);
+    box-shadow:0 10px 24px rgba(156,95,40,.22);
+  }
+}
+.gift-link.opened{
+  background:linear-gradient(135deg, #8a7256, #6b5540);
+}
+#gift1-hint{
+  color:var(--muted);
+}
+#gift1-hint.hidden{ display:none; }
 .hidden{display:none !important;}
 .footnote{ margin-top:18px; font-size:11px; color:var(--line); }
 
@@ -306,15 +332,17 @@ button.text-link{
     </div>
   </div>
 
-  <div class="screen" id="screen-quiz1-success">
-    <div class="card">
-      <div class="eyebrow">Глава III</div>
-      <h1>Ты справилась ✨</h1>
-      <div class="score-badge" id="quiz1-score-success"></div>
-      <p id="gift1-text">Первый подарок уже твой. Загляни в <a href="https://drive.google.com/file/d/1e2ZIeO3JO203kvXvqHRI49w-bcsxi8FL/view?usp=sharing">Cюда</a>.</p>
-      <button onclick="continueToLock()">Продолжить</button>
-    </div>
+<div class="screen" id="screen-quiz1-success">
+  <div class="card">
+    <div class="eyebrow">Глава III</div>
+    <h1>Ты справилась ✨</h1>
+    <div class="score-badge" id="quiz1-score-success"></div>
+    <p>Первый подарок уже твой.</p>
+    <a href="https://drive.google.com/..." target="_blank" rel="noopener" id="gift1-link" class="gift-link">🎁 Открыть подсказку</a>
+    <div class="hint-error" id="gift1-hint">Открой ссылку выше, чтобы продолжить</div>
+    <button id="continue-gift1-btn" onclick="continueToLock()" disabled>Продолжить</button>
   </div>
+</div>
 
   <div class="screen" id="screen-lock">
     <div class="card">
@@ -453,6 +481,7 @@ function defaultState(){
     fishingPassed:false,
     gift1Seen:false,
     achievements:{ code1:false, quiz1:false, code2:false, quiz2:false }
+    gift1LinkOpened:false,
   };
 }
 function saveState(state){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
@@ -742,7 +771,26 @@ function unlockAndShow(id, onContinue){
   if(alreadyEarned){ if(onContinue) onContinue(); return; }
   showAchievement(id, onContinue);
 }
+function initGiftLink(){
+  const link = document.getElementById('gift1-link');
+  const btn = document.getElementById('continue-gift1-btn');
+  const hint = document.getElementById('gift1-hint');
+  if(!link || !btn) return;
 
+  if(state.gift1LinkOpened){
+    btn.disabled = false;
+    link.classList.add('opened');
+    if(hint) hint.classList.add('hidden');
+  }
+
+  link.addEventListener('click', ()=>{
+    state.gift1LinkOpened = true;
+    saveState(state);
+    btn.disabled = false;
+    link.classList.add('opened');
+    if(hint) hint.classList.add('hidden');
+  });
+}
 function renderAchvGallery(){
   const list = document.getElementById('achv-gallery-list');
   list.innerHTML = '';
@@ -795,7 +843,7 @@ function closeAchvGallery(){
 
 updateAchvCounter();
 render();
-
+initGiftLink();
 document.addEventListener('keydown', (e)=>{
   if(e.key !== 'Enter') return;
   const active = document.activeElement;
