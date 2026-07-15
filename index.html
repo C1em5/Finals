@@ -480,8 +480,8 @@ function defaultState(){
     usedCode1:null,
     fishingPassed:false,
     gift1Seen:false,
-    achievements:{ code1:false, quiz1:false, code2:false, quiz2:false }
-    gift1LinkOpened:false,
+    achievements:{ code1:false, quiz1:false, code2:false, quiz2:false },
+    gift1LinkOpened:false
   };
 }
 function saveState(state){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
