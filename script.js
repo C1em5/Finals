@@ -23,8 +23,8 @@
   const FISH_HEIGHT_PCT = 17;  // % of track height (approx, square sprite)
   const RISE_SPEED = 95;       // %/sec while holding
   const FALL_SPEED = 60;       // %/sec gravity
-  const FILL_RATE = 16;        // gauge %/sec when fish inside bar
-  const DRAIN_RATE = 20;       // gauge %/sec when fish outside bar
+  const FILL_RATE = 100;        // gauge %/sec when fish inside bar
+  const DRAIN_RATE = 1;       // gauge %/sec when fish outside bar
 
   let barPos = 60;    // top position of bar, in % of track height (0-100-BAR_HEIGHT_PCT)
   let fishPos = 80;   // top position of fish center-ish, in %
